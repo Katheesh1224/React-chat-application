@@ -1,0 +1,6 @@
+.list{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-right: rgba(255, 255, 255, 0.13) 1px solid;
+}
