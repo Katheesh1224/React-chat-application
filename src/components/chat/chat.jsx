@@ -10,7 +10,7 @@ const Chat = () => {
     const [open, setOpen] = useState(false);
     const [text, setText] = useState('');
 
-    const handleEmoji = e => {
+    const handleEmoji = (e) => {
         setText(text + e.emoji);
         setOpen(false);
     }

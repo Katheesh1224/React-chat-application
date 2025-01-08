@@ -1,8 +1,9 @@
-import './chatlist.css';
+import './chatList.css';
 import React from 'react';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSearch, faMinus } from '@fortawesome/free-solid-svg-icons';
+import AddUser from '../../addUser/AddUser.jsx';
 
 
 const ChatList = () => {
@@ -48,6 +49,7 @@ const ChatList = () => {
                     <p>Hello</p>
                 </div>
             </div>
+            {addMode && <AddUser/>}
         </div>
     )
 }
