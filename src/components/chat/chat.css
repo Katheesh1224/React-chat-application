@@ -1,8 +1,10 @@
 .chat{
+    display: flex;
+    flex-direction: column;
     flex: 2;
     border-right: rgba(255, 255, 255, 0.13) 1px solid;
 
-    .partner-info{
+    .top{
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -50,21 +52,88 @@
         }
     }
 
-    .type-bar{
+    .middle{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: rgba(255, 255, 255, 0.13) 1px solid;
+        gap: 20px;
+        overflow: auto;
+        scrollbar-width: none;
+
+        .message{
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start;
+            max-width: 70%;
+
+            &.own{
+                align-self: flex-end;
+
+                p{
+                    background-color: rgba(0, 255, 255, 0.282);
+                }
+
+                span{
+                    align-self: flex-end;
+                }
+
+                .img-box{
+                    background-color: rgba(0, 255, 255, 0.282);
+                    align-self: flex-end;
+                }
+            }
+
+            p{
+                font-size: 14px;
+                padding: 7px;
+                border-radius: 6px;
+                background-color: rgba(128, 128, 128, 0.258);
+            }
+
+            span{
+                font-size: 10px;
+                align-self: flex-start;
+                padding: 5px;
+            }
+
+            .img-box{
+                background-color: rgba(128, 128, 128, 0.258);
+                padding: 5px;
+                border-radius: 8px;
+                width: max-content;
+
+                img{
+                    width: 300px;
+                    height: 300px;
+                    border-radius: 6px;
+                }
+            }
+
+            
+        }
+
+        
+    }
+
+    .bottom{
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         padding: 20px;
+        gap: 10px;
 
-        .message{
+        .type{
             background-color: rgba(255, 255, 255, 0.1);
             border: none;
             outline: none;
             padding: 7px 10px;
             color: white;
             border-radius: 6px;
-            width: 70%;
+            flex: 3;
     
             input{
                 background-color: transparent;
@@ -79,12 +148,20 @@
         .icons{
             display: flex;
             flex-direction: row;
+            justify-content: center;
+            flex: 1;
             gap: 20px;
     
             path{
                 width: 20px;
                 height: 20px;
                 cursor: pointer;
+            }
+
+            .emoji{
+                position: absolute;
+                left: 60.5vw;
+                bottom: 50px;
             }
         }
     }
