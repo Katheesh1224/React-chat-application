@@ -2,14 +2,17 @@ import './userInfo.css';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faVideo, faEdit } from '@fortawesome/free-solid-svg-icons';
-
+import { useUserStore } from '../../../lib/userStore';
 
 const UserInfo = () => {
+
+    const {currentUser} = useUserStore();
+
     return(
         <div className='userinfo'>
             <div className='user'>
-                <img src='./avatar.png' alt=''/>
-                <h2>Gobikatheesh</h2>
+                <img src={currentUser.avatar || './avatar.png'} alt=''/>
+                <h2>{currentUser.username}</h2>
             </div>
             <div className='icons'>
                 <FontAwesomeIcon icon={faEllipsis} />
@@ -17,6 +20,7 @@ const UserInfo = () => {
                 <FontAwesomeIcon icon={faEdit} />
             </div>
         </div>
+        
     )
 }
 

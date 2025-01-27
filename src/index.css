@@ -26,3 +26,13 @@ body{
   border-radius: 5px;
   border: rgb(54, 48, 48) 1px solid;
 }
+
+.loading{
+  padding: 50px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.597);
+  border-radius: 15px;
+}

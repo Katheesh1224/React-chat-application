@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../lib/firebase";
+import { doc, setDoc } from "firebase/firestore"; 
 
 const Login = () => {
 
@@ -10,6 +13,8 @@ const Login = () => {
         file:null,
         url:""
     })
+
+    const [loading, setLoading] = useState(false);
         
     const handleAvatar = (e) =>{
         if(e.target.files[0]){
@@ -20,14 +25,57 @@ const Login = () => {
         }
     }
 
-    const handleSignIn = (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
-        toast.success("Signed In Successfully");
+        setLoading(true);
+
+        const formData = new FormData(e.target);
+        const {email, password} = Object.fromEntries(formData);
+        try{
+            await signInWithEmailAndPassword(auth, email, password);
+            toast.success("Signed In Successfully");
+        }
+        catch(error){
+            console.log(error);
+            toast.error(error.message);
+        }
+        finally{
+            setLoading(false);
+        }
     }
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
-        toast.success("Signed Up Successfully");
+        setLoading(true);
+
+        const formData = new FormData(e.target);
+        const {username, email, password} = Object.fromEntries(formData);
+
+        try{
+            const res = await createUserWithEmailAndPassword(auth, email, password);
+
+            await setDoc(doc(db, "users", res.user.uid), {
+                username,
+                email,
+                id: res.user.uid,
+                blocked: [],
+                avatar: avatar.url || "./avatar.png",
+            });
+
+            await setDoc(doc(db, "userchats", res.user.uid), {
+                chats: [],
+            });
+
+            toast.success("Signed Up Successfully");
+
+        }
+        catch(error){
+            console.log(error);
+            toast.error(error.message);
+        }
+        finally{
+            setLoading(false);
+        }
     }
 
     return (
@@ -37,13 +85,13 @@ const Login = () => {
                 <form onSubmit={handleSignIn}>
                     <div className="input-bar">
                         <FontAwesomeIcon icon={faEnvelope} />
-                        <input type="text" placeholder="Email"/>
+                        <input type="text" placeholder="Email" name="email"/>
                     </div>
                     <div className="input-bar">
                         <FontAwesomeIcon icon={faKey} />
-                        <input type="password" placeholder="Password"/>
+                        <input type="password" placeholder="Password" name="password"/>
                     </div>
-                    <button>Sign In</button>
+                    <button disabled={loading} >{loading ? "Loading" : "Sign In"}</button>
                 </form>
             </div>
             <div className="separator"></div>
@@ -56,17 +104,17 @@ const Login = () => {
                     </label>
                     <div className="input-bar">
                         <FontAwesomeIcon icon={faUser} />
-                        <input type="text" placeholder="Username"/>
+                        <input type="text" placeholder="Username" name="username"/>
                     </div>
                     <div className="input-bar">
                         <FontAwesomeIcon icon={faEnvelope} />
-                        <input type="text" placeholder="Email"/>
+                        <input type="text" placeholder="Email" name="email"/>
                     </div>
                     <div className="input-bar">
                         <FontAwesomeIcon icon={faKey} />
-                        <input type="password" placeholder="Password"/>
+                        <input type="password" placeholder="Password" name="password"/>
                     </div>
-                    <button>Sign Up</button>
+                    <button disabled={loading} >{loading ? "Loading" : "Sign Up"}</button>
                 </form>
             </div>
         </div>

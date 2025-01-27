@@ -2,6 +2,7 @@ import './detail.css';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faExpand } from '@fortawesome/free-solid-svg-icons';
+import { auth } from '../../lib/firebase';
 
 
 const Detail = () => {
@@ -101,7 +102,7 @@ const Detail = () => {
                 </div>
                 <button>Block User</button>
             </div>
-            <button className='logout'>Logout</button>
+            <button className='logout' onClick={() => auth.signOut()}>Logout</button>
         </div>
     )
 }
